@@ -1,4 +1,4 @@
-# Global-Asthma-Burden-Analysis
+# Global-Asthma-Burden
 
 <p align="center">
   <strong>Analyzing global asthma prevalence, mortality, and demographic trends using the Global Burden of Disease (GBD) dataset</strong><br/>
@@ -127,10 +127,9 @@ Several challenges were encountered:
 * Optimizing performance for dashboard visualization
 
 ---
+## Tech Stack
 
-# Tech Stack
-
-### Data Analysis
+### Data Analysis & Processing
 
 * Python
 * Pandas
@@ -138,21 +137,22 @@ Several challenges were encountered:
 
 ### Database
 
-* SQL Server
+* Microsoft SQL Server
 
-### Visualization
+### Business Intelligence & Visualization
 
 * Power BI
-* Excel
+* Tableau
+* Microsoft Excel
 
 ### Machine Learning
 
 * Scikit-Learn
 
-### AI
+### AI Assistant
 
-* Gemini API
 * AsthmAI Chatbot
+* Gemini API
 
 ### Development Tools
 
@@ -163,10 +163,10 @@ Several challenges were encountered:
 
 ---
 
-# Project Structure
+## Project Structure
 
 ```bash
-Global-Asthma-Burden-Analysis/
+Global-Asthma-Burden/
 │
 ├── data/
 │   ├── raw/
@@ -175,19 +175,31 @@ Global-Asthma-Burden-Analysis/
 │
 ├── database/
 │   ├── schema/
-│   ├── procedures/
-│   └── views/
+│   ├── views/
+│   └── stored_procedures/
 │
 ├── notebooks/
+│   ├── data_cleaning/
+│   ├── exploratory_analysis/
+│   └── machine_learning/
 │
 ├── src/
 │   ├── preprocessing/
 │   ├── analytics/
+│   ├── visualization/
 │   ├── machine_learning/
 │   └── chatbot/
 │
 ├── dashboards/
 │   ├── powerbi/
+│   │   └── Asthma_Dashboard.pbix
+│   │
+│   ├── tableau/
+│   │   └── Asthma_Dashboard.twbx
+│   │
+│   ├── excel/
+│   │   └── Asthma_Dashboard.xlsx
+│   │
 │   └── screenshots/
 │
 ├── chatbot/
@@ -196,6 +208,8 @@ Global-Asthma-Burden-Analysis/
 │   └── api/
 │
 ├── reports/
+│   ├── final_report.pdf
+│   └── presentation.pptx
 │
 ├── docs/
 │
@@ -203,6 +217,33 @@ Global-Asthma-Burden-Analysis/
 │
 └── README.md
 ```
+
+---
+
+## Dashboard Features
+
+### Power BI Dashboard
+
+* Global Asthma Overview
+* Country Comparison
+* Mortality Analysis
+* Age Group Analysis
+* Gender Distribution
+* Trend Analysis (1990–2023)
+
+### Tableau Dashboard
+
+* Interactive Geospatial Maps
+* Regional Comparisons
+* Advanced Visual Storytelling
+* Cross-filter Exploration
+
+### Excel Dashboard
+
+* Executive Summary KPIs
+* Interactive Charts
+* Pivot Tables
+* Quick Country-Level Analysis
 
 ---
 
@@ -214,11 +255,12 @@ Global-Asthma-Burden-Analysis/
 * Multi-language AI chatbot support
 * Cloud deployment
 
+
 ---
 
 # Contributors
 
-**Ammar Abdalkber AbdelQader**
+**Ammar Abdelkabir AbdelQader Othman**
 
 **Mohamed Ahmed Hassen Selim**
 
