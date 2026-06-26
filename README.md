@@ -1,4 +1,6 @@
-# 🌍 Global-Asthma-Burden
+<h1 align="center">
+   Global Asthma Burden
+</h1>
 
 <p align="center">
   <strong>Analyzing global asthma prevalence, mortality, demographic trends, and patient-level risk using the Global Burden of Disease (GBD) dataset and Machine Learning.</strong><br/>
@@ -67,7 +69,7 @@ The goal is to transform large healthcare datasets into interactive visualizatio
 
 # Datasets
 
-## 🌍 Global Burden of Disease (GBD)
+## Global Burden of Disease (GBD)
 
 Population-level dataset used to analyze:
 
@@ -89,7 +91,7 @@ Purpose:
 
 ---
 
-## 👤 Asthma Disease Dataset (Patient-Level)
+## Asthma Disease Dataset (Patient-Level)
 
 Patient records containing:
 
