@@ -312,12 +312,10 @@ During the project, several challenges were addressed:
 ```bash
 Global-Asthma-Burden/
 │
-├── assets/
-│   ├── logo/
-│   └── screenshots/
+├── Logo Project/
 │
 ├── data/
-│   ├── GBD/
+│   ├── GBD Data/
 │   ├── Patient_Level/
 │   ├── processed/
 │   └── metadata/
@@ -365,8 +363,6 @@ Global-Asthma-Burden/
 ├── docs/
 │
 ├── requirements.txt
-│
-├── LICENSE
 │
 └── README.md
 ```
