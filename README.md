@@ -16,7 +16,7 @@
 
 *The Story of Saving Lives with Numbers.*
 
-[Overview](#overview) • [Problem Statement](#problem-statement) • [Our Solution](#our-solution) • [Structure](#Project-Structure) • [Datasets](#datasets) • [Dashboards](#dashboards) • [ML Models](#machine-learning) • [AI Chatbot](#ai-chatbot) • [Team](#team)
+[Overview](#overview) • [Problem Statement](#problem-statement) • [Our Solution](#our-solution) • [Structure](#Project-Structure) • [Datasets Resource](#datasets) • [Dashboards](#dashboards) • [ML Models](#machine-learning) • [AI Chatbot](#ai-chatbot) • [Team](#team)
 
 </div>
 
@@ -336,45 +336,29 @@ Powered by **Google Gemini 2.5 Flash API**
 
 ---
 
-## Requirements
-
-```
-pandas>=2.0.0
-numpy>=1.24.0
-matplotlib>=3.7.0
-seaborn>=0.12.0
-scikit-learn>=1.3.0
-xgboost>=1.7.0
-jupyter>=1.0.0
-openpyxl>=3.1.0
-plotly>=5.15.0
-```
-
----
-
 ## Team — DEPI R4 AST
 
 | Name | Role |
 |---|---|
-| Ammar Abdelqader | Project Lead · ML · Chatbot |
-| Nour | Excel Dashboard · Data Cleaning |
-| Mohamed | Power BI Dashboard |
-| Adham | Power BI Dashboard |
-| Abdelrhman | Tableau Dashboard |
-| Nancy | Tableau Dashboard · Python EDA |
+| Ammar Abdalkber | Project Lead · ML · Chatbot . SQL . Chatbot . Tableau|
+| Nour Ayman | Streamlit · Python EDA . Presentation|
+| Abdelrhman Mohamed | Power BI Dashboard . Data patient Review|
+| Mohamed Ahmed| Tableau Dashboard . Excel |
+| Nancy Abdelnaby | Tableau Dashboard  |
+| Adham Ahmed | Power BI Dashboard |
 
-**Program:** Digital Egypt Pioneers Initiative (DEPI) — Round 4
-**Track:** Data Analytics
-**Comapny:** AST
-**Group:** ONL4_DAT1_S4
+- **Program:** Digital Egypt Pioneers Initiative (DEPI) — Round 4
+- **Track:** Data Analytics
+- **Comapny:** AST
+- **Group:** ONL4_DAT1_S4
 
 ---
 
 <div align="center">
 
-** Global Asthma Analysis Platform**
-DEPI Round 4 · AST Group · Minia University · Egypt 🇪🇬
+*Global Asthma Analysis Platform*
+DEPI Round 4 · AST Company · Egypt 🇪🇬
 
-*The Story of Saving Lives with Numbers*
+*The Story of Saving Lives with Numbers...The End*
 
 </div>
