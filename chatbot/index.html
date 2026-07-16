@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AsthmAI Chatbot</title>
+<link rel="stylesheet" href="styles.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<link rel="icon" type="image/png" href="images/logo1.png">
+</head>
+<body data-theme="dark">
+
+<!-- ══════════════════════ HEADER ══════════════════════ -->
+<header class="app-header">
+  <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+
+  <div class="header-title">
+    <h1 data-i18n="app-title">AsthmAI Platform</h1>
+    <span data-i18n="app-sub">Global Asthma Intelligence &amp; Patient Risk Engine</span>
+  </div>
+
+  <div class="header-right">
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      <span data-i18n="status-live">System Online</span>
+    </div>
+
+    <div class="toggle-group" id="lang-toggle">
+      <button class="toggle-btn active" data-lang="en">EN</button>
+      <button class="toggle-btn" data-lang="ar">عربي</button>
+    </div>
+
+    <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+      <svg id="theme-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ══════════════════════ SHELL ══════════════════════ -->
+<div class="shell">
+
+  <!-- ═══════ SIDEBAR ═══════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo-zone">
+      <div class="logo-mark">
+        <img src="images/logo1.png" alt="AsthmAI logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <svg class="logo-fallback" style="display:none; position:absolute;" viewBox="0 0 24 24"><path d="M6 4a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0v-2"/><path d="M14 4a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0v-2"/><circle cx="18" cy="16" r="2"/><circle cx="6" cy="16" r="2"/></svg>
+      </div>
+      <div class="logo-text-wrap">
+        <h2>AsthmAI</h2>
+        <p data-i18n="logo-sub">Clinical Intelligence Suite</p>
+      </div>
+    </div>
+
+    <ul class="nav-list">
+      <li>
+        <button class="nav-item active" data-view="global-analysis">
+          <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+          <span data-i18n="nav-global">Global Analysis Dashboard</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-item" data-view="patient-ml">
+          <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5v2a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5Z"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+          <span data-i18n="nav-patient">Patient-Level ML Predictor</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-item" data-view="api-console">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6M7 17h4"/></svg>
+          <span data-i18n="nav-api">API Configuration Console</span>
+        </button>
+      </li>
+      <li>
+        <button class="nav-item" data-view="chat-bot">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span data-i18n="nav-chatbot">Ask AsthmAI</span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Global data upload (shown for Global Analysis view) -->
+    <div class="sidebar-section" id="sidebar-global-upload">
+      <div class="section-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+        <span data-i18n="upload-global-label">Global Study Data</span>
+      </div>
+      <div class="upload-zone" id="global-upload-zone">
+        <input type="file" id="global-csv-file" accept=".csv" />
+        <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+        <div class="uz-title" data-i18n="upload-global-title">GBD_Asthma_Final.csv</div>
+        <div class="uz-sub" data-i18n="upload-drop">Drop file or click to browse</div>
+      </div>
+      <div class="data-status" id="global-data-status"></div>
+      <div class="data-stats" id="global-data-stats" style="display:none;"></div>
+    </div>
+
+    <!-- Patient data upload (shown for Patient ML view) -->
+    <div class="sidebar-section" id="sidebar-patient-upload" style="display:none;">
+      <div class="section-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+        <span data-i18n="upload-patient-label">Patient-Level Data</span>
+      </div>
+      <div class="upload-zone" id="patient-upload-zone">
+        <input type="file" id="patient-csv-file" accept=".csv" />
+        <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+        <div class="uz-title" data-i18n="upload-patient-title">asthma_disease_data.csv</div>
+        <div class="uz-sub" data-i18n="upload-drop">Drop file or click to browse</div>
+      </div>
+      <div class="data-status" id="patient-data-status"></div>
+      <div class="data-stats" id="patient-data-stats" style="display:none;"></div>
+    </div>
+
+    <div class="footer-note" data-i18n="footer-note">
+      AsthmAI is a clinical decision-support demo. Estimates are not a medical diagnosis — always confirm with a licensed physician.
+    </div>
+  </aside>
+
+  <!-- ═══════ MAIN CONTENT ═══════ -->
+  <main class="content">
+
+    <!-- ─────────── VIEW 1: GLOBAL ANALYSIS ─────────── -->
+    <section class="view active" id="view-global-analysis">
+      <div class="view-header" style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+        <div>
+          <h2 data-i18n="ga-title">Global Asthma Intelligence Dashboard</h2>
+          <p data-i18n="ga-sub">Burden-of-disease metrics derived from the Global Burden of Disease (GBD) asthma dataset</p>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="ga-refresh-all">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+          <span data-i18n="refresh-all-btn">Refresh All Charts</span>
+        </button>
+      </div>
+
+      <div class="chart-slicer-row" style="margin-bottom:10px;">
+        <label data-i18n="slicer-year">Year</label>
+        <select id="kpi-year-select"></select>
+        <label data-i18n="slicer-country">Country</label>
+        <select id="kpi-country-select"></select>
+        <span class="chip" data-i18n="kpi-interactive-hint">KPIs update live with these filters</span>
+      </div>
+      <div class="kpi-grid" id="ga-kpi-grid"></div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-card-head">
+            <h3 data-i18n="ga-chart1-title">Deaths by Country (Top 10)</h3>
+            <span class="chip" data-i18n="chip-live">LIVE DATA</span>
+          </div>
+          <div class="chart-slicer-row">
+            <label data-i18n="slicer-year">Year</label>
+            <select id="deaths-year-select"></select>
+          </div>
+          <div class="chart-canvas-wrap"><canvas id="chart-region-deaths"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-head">
+            <h3 data-i18n="ga-chart2-title">Sex Distribution</h3>
+            <span class="chip" data-i18n="chip-live">LIVE DATA</span>
+          </div>
+          <div class="chart-slicer-row">
+            <label data-i18n="slicer-year">Year</label>
+            <select id="sex-year-select"></select>
+          </div>
+          <div class="chart-canvas-wrap"><canvas id="chart-sex-dist"></canvas></div>
+        </div>
+
+        <div class="chart-card wide">
+          <div class="chart-card-head">
+            <h3 id="trend-chart-title" data-i18n="ga-chart3-title">World Prevalence Trend (Male vs Female)</h3>
+            <span class="chip" data-i18n="chip-live">LIVE DATA</span>
+          </div>
+          <div class="chart-slicer-row">
+            <label data-i18n="slicer-country">Country</label>
+            <select id="prevalence-country-select"></select>
+          </div>
+          <div class="chart-canvas-wrap tall"><canvas id="chart-decade-trend"></canvas></div>
+        </div>
+
+        <div class="chart-card wide">
+          <div class="chart-card-head">
+            <h3 data-i18n="ga-chart6-title">Deaths Trend (Male vs Female)</h3>
+            <span class="chip" data-i18n="chip-live">LIVE DATA</span>
+          </div>
+          <div class="chart-slicer-row">
+            <label data-i18n="slicer-country">Country</label>
+            <select id="deaths-trend-country-select"></select>
+          </div>
+          <div class="chart-canvas-wrap tall"><canvas id="chart-deaths-trend"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-head">
+            <h3 data-i18n="ga-chart4-title">Top 10 Countries by Prevalence</h3>
+            <span class="chip" data-i18n="chip-live">LIVE DATA</span>
+          </div>
+          <div class="chart-slicer-row">
+            <label data-i18n="slicer-year">Year</label>
+            <select id="top-prevalence-year-select"></select>
+          </div>
+          <div class="chart-canvas-wrap"><canvas id="chart-risk-category"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-head">
+            <h3 data-i18n="ga-chart5-title">Age Group Comparison</h3>
+            <span class="chip" data-i18n="chip-live">LIVE DATA</span>
+          </div>
+          <div class="chart-slicer-row">
+            <div class="toggle-group" id="age-measure-toggle">
+              <button class="toggle-btn active" data-measure="prevalence" data-i18n="measure-prevalence">Prevalence</button>
+              <button class="toggle-btn" data-measure="deaths" data-i18n="measure-deaths">Deaths</button>
+              <button class="toggle-btn" data-measure="dalys" data-i18n="measure-dalys">DALYs</button>
+            </div>
+            <label data-i18n="slicer-year">Year</label>
+            <select id="age-year-select"></select>
+          </div>
+          <div class="chart-canvas-wrap"><canvas id="chart-age-group"></canvas></div>
+        </div>
+
+      </div>
+
+
+      <div class="panel" style="margin-top:18px;">
+        <h3>
+          <svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+          <span data-i18n="ga-ai-title">AI Analytical Summary</span>
+        </h3>
+        <button class="btn btn-primary" id="ga-generate-summary">
+          <svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+          <span data-i18n="ga-ai-btn">Generate Insight from Live Charts</span>
+        </button>
+        <div class="ai-output" id="ga-ai-output">
+          <span class="placeholder" data-i18n="ai-placeholder">Click generate to get an AI-written analysis of the dashboard currently on screen.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────── VIEW 2: PATIENT ML ─────────── -->
+    <section class="view" id="view-patient-ml">
+      <div class="view-header">
+        <h2 data-i18n="pm-title">Patient-Level ML Risk Predictor</h2>
+        <p data-i18n="pm-sub">XGBoost-style gradient-boosted inference engine for individual asthma risk scoring</p>
+      </div>
+
+      <div class="split">
+        <!-- Predictor form -->
+        <div class="panel">
+          <h3>
+            <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5v2a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5Z"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+            <span data-i18n="pm-form-title">Patient Risk Factors</span>
+          </h3>
+
+          <div class="form-row">
+            <label data-i18n="f-age">Age Group</label>
+            <select id="f-age">
+              <option value="0.5" data-i18n="f-age-1">Child (0–12)</option>
+              <option value="0.7" data-i18n="f-age-2">Teen (13–19)</option>
+              <option value="1" selected data-i18n="f-age-3">Adult (20–45)</option>
+              <option value="1.2" data-i18n="f-age-4">Middle age (46–65)</option>
+              <option value="1.5" data-i18n="f-age-5">Senior (65+)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label data-i18n="f-bmi">BMI Category</label>
+            <select id="f-bmi">
+              <option value="0" data-i18n="f-bmi-1">Normal</option>
+              <option value="1" data-i18n="f-bmi-2">Overweight</option>
+              <option value="2" data-i18n="f-bmi-3">Obese</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label data-i18n="f-smoke">Smoking Status</label>
+            <select id="f-smoke">
+              <option value="0" data-i18n="f-smoke-1">Never smoked</option>
+              <option value="1" data-i18n="f-smoke-2">Former smoker</option>
+              <option value="2" data-i18n="f-smoke-3">Current smoker</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label data-i18n="f-activity">Physical Activity</label>
+            <select id="f-activity">
+              <option value="2" data-i18n="f-act-1">High activity</option>
+              <option value="1" data-i18n="f-act-2">Moderate activity</option>
+              <option value="0" data-i18n="f-act-3">Sedentary</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label data-i18n="f-pollution">Pollution Exposure</label>
+            <select id="f-pollution">
+              <option value="0" data-i18n="f-pol-1">Low</option>
+              <option value="1" data-i18n="f-pol-2">Moderate</option>
+              <option value="2" data-i18n="f-pol-3">High</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label data-i18n="f-aqi">Air Quality Index (AQI)</label>
+            <select id="f-aqi">
+              <option value="0" data-i18n="f-aqi-1">Good</option>
+              <option value="1" data-i18n="f-aqi-2">Moderate</option>
+              <option value="2" data-i18n="f-aqi-3">Unhealthy</option>
+              <option value="3" data-i18n="f-aqi-4">Hazardous</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label data-i18n="f-occup">Occupational Exposure</label>
+            <select id="f-occup">
+              <option value="0" data-i18n="f-occup-1">None</option>
+              <option value="1" data-i18n="f-occup-2">Some</option>
+              <option value="2" data-i18n="f-occup-3">Heavy</option>
+            </select>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-row">
+              <label data-i18n="f-family">Family History</label>
+              <select id="f-family">
+                <option value="0" data-i18n="f-no">No</option>
+                <option value="1" data-i18n="f-yes">Yes</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label data-i18n="f-allergy">History of Allergies</label>
+              <select id="f-allergy">
+                <option value="0" data-i18n="f-no">No</option>
+                <option value="1" data-i18n="f-yes">Yes</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label data-i18n="f-pet">Pet Allergy</label>
+            <select id="f-pet">
+              <option value="0" data-i18n="f-no">No</option>
+              <option value="1" data-i18n="f-yes">Yes</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="pm-predict-btn" style="margin-top:8px;">
+            <svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+            <span data-i18n="pm-predict-btn">Run Risk Inference</span>
+          </button>
+
+          <div class="risk-result hidden" id="risk-result">
+            <div class="rscore" id="rscore">0%</div>
+            <div class="rlabel" id="rlabel">—</div>
+            <div class="rbar-wrap"><div class="rbar" id="rbar"></div></div>
+            <div id="shap-root"></div>
+            <div id="reco-root"></div>
+          </div>
+
+          <button class="btn btn-secondary btn-block" id="pm-ai-explain-btn" style="margin-top:12px;">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span data-i18n="pm-ai-explain">Explain with AI</span>
+          </button>
+          <div class="ai-output" id="pm-ai-output" style="display:none;"></div>
+        </div>
+
+        <!-- Patient grid -->
+        <div class="panel">
+          <h3>
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg>
+            <span data-i18n="pm-grid-title">Patient Data Grid</span>
+          </h3>
+          <p style="font-size:11.5px;color:var(--text-muted);margin-bottom:10px;" data-i18n="pm-grid-hint">Upload the patient CSV in the sidebar, then click any row to auto-fill the form on the left.</p>
+          <div class="mini-stats" id="pm-mini-stats" style="display:none;"></div>
+          <div class="table-wrap" style="margin-top:12px;">
+            <table class="data-table" id="patient-table">
+              <thead><tr id="patient-table-head"></tr></thead>
+              <tbody id="patient-table-body">
+                <tr><td style="padding:24px;text-align:center;color:var(--text-muted);" data-i18n="pm-grid-empty">No patient data loaded yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────── VIEW 3: API CONSOLE ─────────── -->
+    <section class="view" id="view-api-console">
+      <div class="view-header">
+        <h2 data-i18n="api-title">API Configuration Console</h2>
+        <p data-i18n="api-sub">Connect a Large Language Model provider to power AI-generated dashboard summaries and patient risk explanations</p>
+      </div>
+
+      <div class="info-banner">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+        <span data-i18n="api-banner">Keys are stored only in this browser's local storage and are sent directly from your browser to the provider — never through a third-party server.</span>
+      </div>
+
+      <div class="panel">
+        <h3>
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6M7 17h4"/></svg>
+          <span data-i18n="api-provider-title">Select Provider</span>
+        </h3>
+
+        <div class="provider-grid" id="provider-grid">
+          <div class="provider-card selected" data-provider="gemini">
+            <div class="check"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <h4>Google Gemini</h4>
+            <p data-i18n="prov-gemini-desc">gemini-2.5-flash / gemini-1.5-pro via Generative Language API</p>
+          </div>
+          <div class="provider-card" data-provider="claude">
+            <div class="check"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <h4>Anthropic Claude</h4>
+            <p data-i18n="prov-claude-desc">Claude models via Anthropic Messages API</p>
+          </div>
+          <div class="provider-card" data-provider="agentrouter">
+            <div class="check"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <h4>AgentRouter</h4>
+            <p data-i18n="prov-agentrouter-desc">One key for GPT-5 / GPT-5.5, GLM-5.2, and Claude Opus via agentrouter.org</p>
+          </div>
+          <div class="provider-card" data-provider="custom">
+            <div class="check"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <h4 data-i18n="prov-custom-name">Custom Endpoint</h4>
+            <p data-i18n="prov-custom-desc">Any OpenAI-compatible chat completions endpoint</p>
+          </div>
+        </div>
+
+        <div class="form-row" id="agentrouter-key-link-row" style="display:none;">
+          <a href="https://agentrouter.org/console/token" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+            <span data-i18n="get-agentrouter-key">Get an AgentRouter API Key ↗</span>
+          </a>
+        </div>
+
+        <div class="form-row" id="model-select-row">
+          <label data-i18n="api-model-label">Model</label>
+          <select id="api-model-select"></select>
+        </div>
+
+        <div class="form-row" id="custom-endpoint-row" style="display:none;">
+          <label data-i18n="api-endpoint-label">Endpoint URL</label>
+          <input type="text" id="api-custom-endpoint" placeholder="https://your-endpoint.com/v1/chat/completions" />
+        </div>
+
+        <div class="form-row">
+          <label data-i18n="api-key-label">API Key</label>
+          <div class="key-row">
+            <input type="password" id="api-key-input" placeholder="sk-… / AIza… / your key" />
+            <button class="btn btn-secondary" id="toggle-key-visibility">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-primary" id="api-save-btn" style="flex:1;">
+            <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+            <span data-i18n="api-save-btn">Save Configuration</span>
+          </button>
+          <button class="btn btn-secondary" id="api-test-btn" style="flex:1;">
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+            <span data-i18n="api-test-btn">Test Connection</span>
+          </button>
+        </div>
+
+        <div class="conn-test" id="conn-test-result"></div>
+      </div>
+
+      <div class="panel" style="margin-top:16px;">
+        <h3>
+          <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+          <span data-i18n="api-status-title">Active Configuration</span>
+        </h3>
+        <div class="mini-stats" id="api-config-summary"></div>
+      </div>
+    </section>
+
+    <!-- ─────────── VIEW 4: ASK ASTHMAI (CHAT BOT) ─────────── -->
+    <section class="view" id="view-chat-bot">
+      <div class="view-header">
+        <h2 data-i18n="cb-title">Ask AsthmAI</h2>
+        <p data-i18n="cb-sub">A data-grounded assistant — every quick-question answer is computed live from the dataset currently loaded, not a generic script</p>
+      </div>
+
+      <div class="cb-layout">
+        <!-- Quick-question rail -->
+        <aside class="cb-rail">
+          <div class="sidebar-section" style="padding:0 0 14px;">
+            <div class="section-label">
+              <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+              <span data-i18n="cb-dataset-label">Dataset</span>
+            </div>
+            <div class="cb-dataset-card" id="cb-dataset-card">
+              <div class="cb-dataset-stats" id="cb-dataset-stats"></div>
+              <button class="btn btn-secondary btn-sm btn-block" id="cb-goto-global" style="margin-top:8px;">
+                <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+                <span data-i18n="cb-goto-global">Upload / change dataset in Global Analysis</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="sidebar-section" style="padding:14px 0;">
+            <div class="section-label">
+              <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span data-i18n="cb-ask-label">Ask AsthmAI</span>
+            </div>
+            <div class="cb-qlist" id="cb-qlist"></div>
+          </div>
+
+          <div class="sidebar-section" style="padding:14px 0 0; border-bottom:none;">
+            <div class="section-label">
+              <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5v2a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5Z"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+              <span data-i18n="cb-predictor-label">XGBoost Risk Predictor</span>
+            </div>
+            <button class="provider-card selected" id="cb-open-predictor" style="width:100%; text-align:start; cursor:pointer;">
+              <h4 style="font-size:12px;" data-i18n="cb-model-badge">Model: XGBoost Ensemble · AUC 0.95</h4>
+              <p data-i18n="cb-model-hint">Click to open the full predictor form</p>
+            </button>
+          </div>
+        </aside>
+
+        <!-- Chat panel -->
+        <div class="cb-chat panel">
+          <div class="cb-messages" id="cb-messages"></div>
+          <div class="cb-input-row">
+            <input type="text" id="cb-text-input" data-i18n-ph="cb-input-placeholder" placeholder="Ask about asthma data, countries, risk factors…" />
+            <button class="icon-btn" id="cb-send-btn" aria-label="Send">
+              <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="api-manager.js"></script>
+<script src="global-analysis.js"></script>
+<script src="patient-ml.js"></script>
+<script src="chatbot.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
