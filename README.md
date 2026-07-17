@@ -239,8 +239,11 @@ Global-Asthma-Analysis/
 | `upper` | float | Upper confidence interval |
 | `lower` | float | Lower confidence interval |
 
-**Small Note:** When `metric_name = "Percent"`, multiply `val × 100` for display.
+- **Small Note:** When `metric_name = "Percent"`, multiply `val × 100` for display.
 Example: `val = 0.052` → `5.2%`
+- **Stats:** +300K Rows in global patients
+
+  > Another Source help to Insights : [ourworldindata.org](https://ourworldindata.org/grapher/asthma-prevalence)
 
 ---
 
@@ -321,7 +324,7 @@ Powered by **Google Gemini 2.5 Flash API**
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Tools |
 |---|---|
@@ -336,11 +339,11 @@ Powered by **Google Gemini 2.5 Flash API**
 
 ---
 
-## Team — DEPI R4 AST
+## Team
 
 | Name | Role |
 |---|---|
-| Ammar Abdalkber | Project Lead · ML · Chatbot . SQL . Chatbot . Tableau|
+| Ammar Abdalkber | Project Lead · ML . SQL . Chatbot . Tableau|
 | Nour Ayman | Streamlit · Python EDA . Presentation|
 | Abdelrhman Mohamed | Power BI Dashboard . Data patient Review|
 | Mohamed Ahmed| Tableau Dashboard . Excel |
