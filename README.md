@@ -83,13 +83,14 @@ The Global Asthma Analysis Platform addresses each of these gaps directly:
   strongest predictors of an asthma diagnosis, with SHAP explainability so
   results are interpretable, not just accurate.
 - **AsthmAI chatbot** — a bilingual (Arabic/English, RTL-supported)
-  Gemini-powered assistant that lets anyone ask natural-language questions
+  that lets anyone ask natural-language questions
   about the GBD data, generate charts on demand, and receive an ML-based
-  personal risk estimate with SHAP-based explanations — no coding or BI
-  tool required.
+  personal risk estimate with SHAP-based explanations. The chatbot now runs
+  on a dedicated **FastAPI backend** that queries **SQL Server stored
+  procedures** directly — no CSV uploads required.
 - **Governed data layer** — a SQL Server schema, views, and stored
-  procedures give the whole platform a consistent, queryable source of
-  truth behind the dashboards and chatbot.
+  procedures (managed through **SSMS**) give the whole platform a
+  consistent, queryable source of truth behind the dashboards and chatbot.
 
 Together, these pieces turn a fragmented, hard-to-access global health
 dataset into an accessible, explainable, and actionable analytics platform.
@@ -106,7 +107,8 @@ dataset into an accessible, explainable, and actionable analytics platform.
 | Patient records | 2,392 patients · 28 features |
 | ML models | 5 algorithms compared |
 | Dashboards | Power BI + Tableau + Excel |
-| AI Chatbot | Gemini 2.5 Flash API |
+| AI Chatbot | FastAPI backend |
+| Database Tooling | SQL Server Management Studio (SSMS) |
 | Program | DEPI Round 4 · AST Group |
 
 ---
@@ -200,6 +202,25 @@ Global-Asthma-Analysis/
 │   ├── Asthma Presentation Project.pdf
 │   └── Asthma Presentation Project.pptx
 │
+├── Final Chat bot/
+│   ├── Screen Shots/
+│   │   ├── APIs.png
+│   │   ├── Ask AI depend on Procedures in Sql and Data.png
+│   │   ├── GBD Arabic Dark Mode.png
+│   │   ├── GBD Arabic Light Mode.png
+│   │   ├── GBD English Dark Mode.png
+│   │   ├── Ml predict.png
+│   │   ├── patient Data and Predict.png
+│   │   └── procedures in SQl.png
+│   ├── backend/
+│   │   ├── chat_context.py
+│   │   ├── database.py
+│   │   ├── llm_service.py
+│   │   ├── main.py
+│   │   ├── ml_service.py
+│   │   └── requirements.txt
+│   ├── frontend/
+│   └── README.md
 ├── src/
 │   └── models/
 │       ├── X_test.csv
@@ -311,16 +332,30 @@ Example: `val = 0.052` → `5.2%`
 
 ## AI Chatbot — AsthmAI
 
-Powered by **Google Gemini 2.5 Flash API**
-
+There are now **two versions** of the chatbot in this repo: 
+| Version | Location | Data Source |
+|---|---|---|
+| Original | `chatbot/` | Static CSV files loaded in-browser |
+| **Final (Current)** | `Final Chat bot/` | Live queries via **FastAPI** → **SQL Server** stored procedures |
 **Features:**
 - Answer asthma questions with GBD context
 - Generate interactive charts from real data
 - Patient risk score (ML-based, 8 factors)
 - Prevention tips & recommendations
 - Country comparison queries
+- Bilingual UI: Arabic (RTL) / English, with Light & Dark modes
+  
 
-**Run:** Open `chatbot/index.html` in any browser → enter Gemini API key
+**Preview:**
+ 
+The `Final Chat bot/Screen Shots/` folder includes screenshots such as `Ask AI depend on Procedures in Sql and Data.png` and `Ml predict.png`, showing the assistant answering questions using live SQL stored procedures and returning ML-based predictions with explanations.
+
+---
+
+## Run
+ 
+1. **Chat Bot** → Just open `chatbot/index.html` and upload the CSV.
+2. **Final Chat Bot** → See the `README.md` inside `Final Chat bot/`, install `requirements.txt`, and follow the steps.
 
 ---
 
@@ -334,6 +369,8 @@ Powered by **Google Gemini 2.5 Flash API**
 | Machine Learning | Scikit-Learn, XGBoost |
 | BI Tools | Power BI, Tableau, Excel |
 | Database | Microsoft SQL Server |
+| Backend API | FastAPI, Uvicorn |
+| DB Connectivity | pyodbc / SQLAlchemy |
 | AI | Google Gemini 2.5 Flash API |
 | Dev Tools | Jupyter Notebook, VS Code, Git, GitHub |
 
