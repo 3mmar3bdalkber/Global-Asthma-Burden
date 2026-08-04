@@ -16,7 +16,7 @@
 
 *The Story of Saving Lives with Numbers.*
 
-[Overview](#overview) • [Problem Statement](#problem-statement) • [Our Solution](#our-solution) • [Structure](#Project-Structure) • [Datasets Resource](#datasets) • [Dashboards](#dashboards) • [ML Models](#machine-learning) • [AI Chatbot](#ai-chatbot) • [Team](#team)
+[Overview](#overview) • [Problem Statement](#problem-statement) • [Our Solution](#our-solution) • [Structure](#Project-Structure) • [Datasets Resource](#datasets) • [Dashboards](#dashboards) • [ML Models](#machine-learning) • [AI Chatbot](#ai-chatbot) • [Banner](#project-banner) • [Team](#team)
 
 </div>
 
@@ -375,7 +375,7 @@ The `Final Chat bot/Screen Shots/` folder includes screenshots such as `Ask AI d
 
 ---
 
-# Project Banner
+## Project Banner
 
 <p align="center">
   <img src="Logo/Project_Banner.png"
