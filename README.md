@@ -35,8 +35,7 @@ This platform integrates:
 - **Interactive Dashboards** — Power BI, Tableau & Excel
 - **AI-powered Healthcare Chatbot** — AsthmAI (Gemini API)
 - **SQL Server** data warehouse
-*Note: Not Iliagle To use Database Codes System because that Take effort of DEPI Team , contact first bro"Ammar"*
-
+  
 ---
 
 ## Problem Statement
@@ -373,6 +372,16 @@ The `Final Chat bot/Screen Shots/` folder includes screenshots such as `Ask AI d
 | DB Connectivity | pyodbc / SQLAlchemy |
 | AI | Google Gemini 2.5 Flash API |
 | Dev Tools | Jupyter Notebook, VS Code, Git, GitHub |
+
+---
+
+# Project Banner
+
+<p align="center">
+  <img src="Logo/Project_Banner.png"
+       alt="Global Asthma Analytics Banner"
+       style="max-width:100%; height:auto;">
+</p>
 
 ---
 
